@@ -1,6 +1,7 @@
-package com.brij.service;
+package com.brij.service.impl;
 
 import com.brij.model.User;
+import com.brij.service.UserService;
 
 import java.util.HashSet;
 import java.util.Optional;
@@ -12,6 +13,11 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User createUser(int id, String name) {
+        try {
+            Thread.sleep(500);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         final User u = new User(id);
         u.setName(name);
         users.add(u);
@@ -22,9 +28,10 @@ public class UserServiceImpl implements UserService {
     public User getUser(int userId) {
         try {
             Thread.sleep(200);
-        } catch (Exception e) {
+        } catch (InterruptedException e) {
             e.printStackTrace();
         }
+
         final Optional<User> optionalUser = users.stream().filter(user -> (user.getId() == userId)).findFirst();
         if (optionalUser.isPresent()) {
             return optionalUser.get();

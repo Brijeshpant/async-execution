@@ -27,19 +27,25 @@ public class CompletableFutureExecutor implements MyExecutor {
     public void execute(long milliseconds) throws InterruptedException {
         CompletableFuture<Void> cf1 = CompletableFuture.runAsync(() -> executeMe(milliseconds));
         CompletableFuture<Void> cf2 = CompletableFuture.runAsync(() -> executeMe(milliseconds));
-        CompletableFuture.allOf(cf1, cf2).join();
+        cf1.thenCompose(c-> cf2).join();
+//        CompletableFuture.allOf(cf1, cf2).join();
     }
 
     public Order createOrder(int userId, int productId) throws InterruptedException {
         CompletableFuture<Product> productFuture = CompletableFuture.supplyAsync(() -> productService.getProduct(productId));
         CompletableFuture<User> userFuture = CompletableFuture.supplyAsync(() -> userService.getUser(userId));
-        final CompletableFuture<Order> orderFuture = CompletableFuture.allOf(productFuture, userFuture).thenApplyAsync(u -> {
-            User user = userFuture.join();
-            Product product = productFuture.join();
-            return orderService.addOrder(user.getId(), product.getId());
-        });
+        CompletableFuture<Order> orderCompletableFuture = productFuture.thenCombine(userFuture, (product, user) ->
+                orderService.addOrder(user.getId(), product.getId())
+        );
 
-        return orderFuture.join();
+
+//        final CompletableFuture<Order> orderCompletableFuture = CompletableFuture.allOf(productFuture, userFuture).thenApplyAsync(u -> {
+//            User user = userFuture.join();
+//            Product product = productFuture.join();
+//            return orderService.addOrder(user.getId(), product.getId());
+//        });
+
+        return orderCompletableFuture.join();
 
     }
 

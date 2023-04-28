@@ -1,6 +1,7 @@
-package com.brij.service;
+package com.brij.service.impl;
 
 import com.brij.model.Product;
+import com.brij.service.ProductService;
 
 import java.util.HashSet;
 import java.util.Optional;
@@ -12,6 +13,11 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public Product creteProduct(int id, String name) {
+        try {
+            Thread.sleep(500);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         Product product = new Product(id);
         product.setName(name);
         products.add(product);

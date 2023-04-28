@@ -2,6 +2,9 @@ import com.brij.*;
 import com.brij.model.User;
 import com.brij.model.UserDashboard;
 import com.brij.service.*;
+import com.brij.service.impl.OrderServiceImpl;
+import com.brij.service.impl.ProductServiceImpl;
+import com.brij.service.impl.UserServiceImpl;
 import org.junit.*;
 
 public class UserDashboardWithDifferentExecutorsTest {

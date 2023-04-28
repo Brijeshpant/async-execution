@@ -1,5 +1,8 @@
 import com.brij.*;
 import com.brij.service.*;
+import com.brij.service.impl.OrderServiceImpl;
+import com.brij.service.impl.ProductServiceImpl;
+import com.brij.service.impl.UserServiceImpl;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
